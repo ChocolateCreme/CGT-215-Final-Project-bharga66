@@ -10,10 +10,9 @@ int main()
 {
     // Create the window
     RenderWindow window(VideoMode(965, 620), "Angry Birds");
-    window.setFramerateLimit(60);
 
     // Create the physics world
-    World world(Vector2f(0, 9.8f));
+    World world(Vector2f(0, 0.5));
 
     // Load background image
     Texture backgroundTexture;
@@ -29,14 +28,14 @@ int main()
     // Create ceiling
     PhysicsRectangle ceiling;
     ceiling.setSize(Vector2f(965, 10));
-    ceiling.setCenter(Vector2f(482.5f, 0));
+    ceiling.setCenter(Vector2f(482.5, 0));
     ceiling.setStatic(true);
     world.AddPhysicsBody(ceiling);
 
     // Create floor
     PhysicsRectangle floor;
     floor.setSize(Vector2f(965, 10));
-    floor.setCenter(Vector2f(482.5f, 615));
+    floor.setCenter(Vector2f(482.5, 615));
     floor.setStatic(true);
     world.AddPhysicsBody(floor);
 
@@ -52,31 +51,32 @@ int main()
     // Create pigs
     PhysicsSprite pig1;
     pig1.setTexture(pigTexture);
-    pig1.setCenter(Vector2f(900, 40));
+    pig1.setCenter(Vector2f(900, 20));
     world.AddPhysicsBody(pig1);
 
     PhysicsSprite pig2;
     pig2.setTexture(pigTexture);
-    pig2.setCenter(Vector2f(850, 60));
+    pig2.setCenter(Vector2f(825, 30));
     world.AddPhysicsBody(pig2);
 
     PhysicsSprite pig3;
     pig3.setTexture(pigTexture);
-    pig3.setCenter(Vector2f(800, 80));
+    pig3.setCenter(Vector2f(750, 40));
     world.AddPhysicsBody(pig3);
 
     PhysicsSprite pig4;
     pig4.setTexture(pigTexture);
-    pig4.setCenter(Vector2f(750, 100));
+    pig4.setCenter(Vector2f(675, 50));
     world.AddPhysicsBody(pig4);
 
     PhysicsSprite pig5;
     pig5.setTexture(pigTexture);
-    pig5.setCenter(Vector2f(700, 120));
+    pig5.setCenter(Vector2f(600, 60));
     world.AddPhysicsBody(pig5);
 
     // Game loop
     Clock clock;
+    Time lastTime(clock.getElapsedTime());
 
     while (window.isOpen())
     {
@@ -88,6 +88,15 @@ int main()
             {
                 window.close();
             }
+        }
+
+		// Update the physics world
+        Time currentTime(clock.getElapsedTime());
+        Time deltaTime(currentTime - lastTime);
+        int deltaTimeMS(deltaTime.asMilliseconds());
+        if (deltaTimeMS > 0) {
+            world.UpdatePhysics(deltaTimeMS);
+            lastTime = currentTime;
         }
 
         // Draw everything
