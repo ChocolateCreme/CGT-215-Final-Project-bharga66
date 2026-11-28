@@ -39,6 +39,23 @@ int main()
     floor.setStatic(true);
     world.AddPhysicsBody(floor);
 
+    // Make the cannon
+	Texture cannonTexture;
+
+	if (!cannonTexture.loadFromFile("Cannon.png"))
+	{
+		cout << "Failed to load cannon image!" << endl;
+		return -1;
+	}
+
+
+	PhysicsSprite cannon;
+	cannon.setTexture(cannonTexture);
+	cannon.setCenter(Vector2f(60, 275));
+	world.AddPhysicsBody(cannon);
+    cannon.setStatic(true);
+
+
     // Load pig texture
     Texture pigTexture;
 
@@ -111,6 +128,7 @@ int main()
         window.draw(pig3);
         window.draw(pig4);
         window.draw(pig5);
+		window.draw(cannon);
 
         window.display();
     }
