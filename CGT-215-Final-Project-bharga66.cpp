@@ -116,6 +116,16 @@ int main()
             lastTime = currentTime;
         }
 
+		if (Keyboard::isKeyPressed(Keyboard::Up)) {
+			Vector2f newPos(cannon.getCenter().x, cannon.getCenter().y - 0.25);
+			cannon.setCenter(newPos);
+		}
+
+        if (Keyboard::isKeyPressed(Keyboard::Down)) {
+            Vector2f newPos(cannon.getCenter().x, cannon.getCenter().y + 0.25);
+            cannon.setCenter(newPos);
+        }
+
         // Draw everything
         window.clear();
 
